@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgentSteerTTS Demo</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+            line-height: 1.6; color: #333;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+        }
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+        
+        /* Header */
+        header { text-align: center; padding: 60px 20px 40px; color: white; }
+        header h1 {
+            font-size: 3.2em; font-weight: 700; margin-bottom: 15px;
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf, #e94560);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        header .subtitle { font-size: 1.2em; color: #a0a0a0; margin-bottom: 10px; }
+        header .full-title { font-size: 1em; color: #888; max-width: 900px; margin: 0 auto 20px; }
+        .author-list {
+            max-width: 980px; margin: 24px auto 12px; color: #f5f7fb;
+            font-size: 1.02em; line-height: 1.7;
+        }
+        .author-list sup { color: #8fdcff; font-size: 0.72em; margin-left: 2px; }
+        .affiliations {
+            max-width: 980px; margin: 10px auto 0; color: #b7c0d8;
+            font-size: 0.9em; line-height: 1.65;
+        }
+        .status-badge {
+            display: inline-block; padding: 10px 24px;
+            background: rgba(255,255,255,0.1); color: white;
+            border-radius: 25px; border: 1px solid rgba(255,255,255,0.28);
+            font-weight: 600; margin-top: 20px;
+        }
+        
+        /* Section */
+        .section {
+            background: rgba(255,255,255,0.95); border-radius: 20px;
+            padding: 40px; margin: 30px 0; box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        .section h2 {
+            color: #1a1a2e; font-size: 1.8em; margin-bottom: 25px;
+            display: flex; align-items: center; gap: 12px;
+        }
+        
+        /* Abstract */
+        .abstract-box {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 25px; border-radius: 15px; border-left: 5px solid #7b2cbf;
+        }
+        .abstract-box p { color: #333; line-height: 1.8; font-size: 1.05em; text-align: justify; }
+        .abstract-box p + p { margin-top: 15px; }
+        
+        /* Figure */
+        .figure-showcase {
+            background: white; border-radius: 15px; padding: 25px;
+            margin: 20px 0; box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+        }
+        .figure-showcase h4 { color: #1a1a2e; margin-bottom: 15px; font-size: 1.1em; }
+        .figure-showcase img { max-width: 100%; border-radius: 10px; box-shadow: 0 3px 15px rgba(0,0,0,0.1); }
+        .figure-caption {
+            margin-top: 15px; padding: 15px; background: #f8f9fa;
+            border-radius: 8px; color: #555; font-size: 0.95em; line-height: 1.6;
+        }
+        .figure-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; margin-top: 25px; }
+        
+        /* Table */
+        .comparison-table {
+            width: 100%; border-collapse: collapse; margin-top: 20px;
+            background: white; border-radius: 12px; overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+        }
+        .comparison-table thead { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: white; }
+        .comparison-table th { padding: 18px 15px; text-align: center; font-weight: 600; }
+        .comparison-table td { padding: 15px; border-bottom: 1px solid #eee; text-align: center; vertical-align: middle; }
+        .comparison-table tr:hover { background: #f8f9ff; }
+        .text-content { max-width: 200px; font-size: 0.9em; color: #555; text-align: left; }
+        
+        /* Badges */
+        .emotion-badge {
+            display: inline-block; padding: 6px 14px; border-radius: 20px;
+            font-size: 0.85em; font-weight: 600; margin: 2px;
+        }
+        .badge-primary { background: linear-gradient(135deg, #7b2cbf 0%, #9b59b6 100%); color: white; }
+        .badge-secondary { background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%); color: white; }
+        
+        /* Audio placeholder */
+        .audio-placeholder {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white; padding: 10px 15px; border-radius: 20px;
+            display: inline-flex; align-items: center; gap: 8px; font-size: 0.85em;
+        }
+        .audio-placeholder::before { content: '🔊'; }
+        
+        /* Demo parts */
+        .demo-part { margin-bottom: 50px; }
+        .demo-part h3 { margin-bottom: 20px; padding-bottom: 10px; }
+        .demo-part h3.composite { color: #7b2cbf; border-bottom: 3px solid #7b2cbf; }
+        .demo-part h3.single { color: #00b894; border-bottom: 3px solid #00b894; }
+        .demo-part h3.intensity { color: #e94560; border-bottom: 3px solid #e94560; }
+        
+        /* Footer */
+        footer { text-align: center; padding: 40px 20px; color: white; margin-top: 50px; }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 { font-size: 2.2em; }
+            .figure-grid { grid-template-columns: 1fr; }
+            .comparison-table { font-size: 0.85em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>AgentSteerTTS</h1>
+            <p class="subtitle">Multi-Agent Closed-Loop Steering Framework</p>
+            <p class="full-title">A Multi-Agent Closed-Loop Steering Framework for Intent-Consistent Expressive Text-to-Speech</p>
+            <div class="author-list">
+                Bin Kang<sup>1,2,3</sup>, Shaoguo Wen<sup>3</sup>, Yang Fan<sup>2</sup>,
+                Shunlong Wu<sup>4</sup>, Junjie Wang<sup>2</sup>, Yulin Li<sup>2</sup>,
+                Junzhi Zhao<sup>5</sup>, Junle Wang<sup>3</sup>, Zhuotao Tian<sup>2</sup>
+            </div>
+            <div class="affiliations">
+                <sup>1</sup>University of Chinese Academy of Sciences, Beijing, China<br>
+                <sup>2</sup>Shenzhen Loop Area Institute, Shenzhen, China<br>
+                <sup>3</sup>Tencent Turinglab, Shenzhen, China<br>
+                <sup>4</sup>Tsinghua University, Beijing, China<br>
+                <sup>5</sup>Southwest Jiaotong University, Chengdu, China
+            </div>
+            <div class="status-badge">ICML 2026 Project Page</div>
+        </header>
+
+        <!-- Abstract -->
+        <section class="section">
+            <h2><span>[A]</span> Abstract</h2>
+            <div class="abstract-box">
+                <p>
+                    While current TTS models can be highly expressive, precise control over <strong>fine-grained composite instructions</strong> remains difficult due to the structural mismatch between discrete textual intents and continuous acoustic realizations. Inspired by human cognitive decoupling, we propose <strong style="color: #7b2cbf;">AgentSteerTTS</strong>, a multi-agent, closed-loop framework for intent-faithful emotional steering.
+                </p>
+                <p>
+                    We first apply <strong>adversarial gradient reversal</strong> to disentangle identity and emotion and enforce strict latent orthogonality. Subsequently, we introduce a <strong>Dual-Stream Anchoring Controller</strong>, where a <em>Retrieval Agent</em> leverages a large-scale constructed library of fine-grained acoustic prototypes to ground abstract intent, while a <em>Synthesis Agent</em> transforms these cues into continuous control vectors through gated fusion. Finally, we implement a <strong>fast-slow feedback mechanism</strong> where a <em>Fast Control Agent</em> performs rapid latent gradient correction for intensity calibration, and a <em>Supervisor Agent</em> provides high-level perceptual critique to rectify semantic-acoustic discrepancies.
+                </p>
+            </div>
+        </section>
+
+        <!-- Method Overview -->
+        <section class="section">
+            <h2><span>[M]</span> Method Overview</h2>
+            <div class="figure-showcase">
+                <img src="./images/overview.png" alt="Framework Overview" style="width: 100%;">
+                <div class="figure-caption">
+                    <strong>Figure 1: AgentSteerTTS Framework.</strong> Our method consists of four key components: 
+                    (1) <strong>Adversarial Disentanglement Module (ADM)</strong> that decouples speaker identity from emotion via gradient reversal and latent orthogonality; 
+                    (2) <strong>Retrieval Agent</strong> that retrieves high-expressivity prototypes from a large-scale acoustic library with perceptual pruning; 
+                    (3) <strong>Synthesis Agent</strong> that transforms discrete intents into continuous control vectors via gated fusion mechanism; 
+                    (4) <strong>Fast-Slow Feedback</strong> mechanism for hierarchical semantic-acoustic alignment correction.
+                </div>
+            </div>
+        </section>
+
+        <!-- Research Motivation -->
+        <section class="section">
+            <h2><span>[R]</span> Research Motivation</h2>
+            <p style="color: #666; margin-bottom: 20px;">Our pilot study reveals that existing TTS models exhibit <strong>systematic biases</strong> when handling composite emotional instructions, failing to faithfully express multi-dimensional emotional intents.</p>
+            
+            <div class="figure-showcase">
+                <h4>Composite Emotion Control Analysis</h4>
+                <img src="./images/composite_emotion_radar.png" alt="Composite Emotion Radar" style="width: 100%; max-width: 900px; display: block; margin: 0 auto;">
+                <div class="figure-caption">
+                    <strong>Figure 2: Semantic-Acoustic Misalignment in Existing Methods.</strong> 
+                    When given composite instructions (e.g., "Happy but slightly Arrogant"), state-of-the-art models show significant deviation from target emotion profiles:
+                    <ul style="margin-top: 10px; margin-left: 20px;">
+                        <li><strong>Target Suppression:</strong> Target emotion expression drops 25%-45%</li>
+                        <li><strong>Energy Leakage:</strong> +0.08 average leakage to irrelevant dimensions</li>
+                        <li><strong>Joint Satisfaction:</strong> Only ~30% for composite instructions</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Audio Demonstrations -->
+        <section class="section">
+            <h2><span>🎧</span> Audio Demonstrations</h2>
+            <p style="color: #666; margin-bottom: 30px;">We present audio samples demonstrating AgentSteerTTS's capabilities across three key dimensions.</p>
+
+            <!-- Part 1: Composite Instructions -->
+            <div class="demo-part">
+                <h3 class="composite">🎭 Part 1: Composite Emotion Control</h3>
+                <p style="color: #666; margin-bottom: 20px;">Complex instructions combining multiple emotional attributes - our <strong>core contribution</strong>.</p>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Reference Audio</th>
+                            <th>Composite Instruction</th>
+                            <th>Text Content</th>
+                            <th>IndexTTS2</th>
+                            <th>CosyVoice2</th>
+                            <th>AgentSteerTTS (Ours)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td rowspan="6" style="vertical-align: middle; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+                                <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+                                    <span style="font-size: 2em;">🎤</span>
+                                    <span style="font-weight: 600; color: #7b2cbf;">Speaker Reference</span>
+                                    <audio controls style="width:140px;height:36px;"><source src="./audio/spk1.m4a" type="audio/mp4">不支持</audio>
+                                </div>
+                            </td>
+                            <td class="text-content" style="font-weight: 600; color: #7b2cbf;">Happy but slightly Arrogant</td>
+                            <td class="text-content">我早就知道会是这个结果，这种事对我来说太简单了！</td>
+                            <td><audio controls style="width:120px;height:32px;"><source src="./audio/happy_2.wav" type="audio/wav"></audio></td>
+                            <td><audio controls style="width:120px;height:32px;"><source src="./audio/happy_1.wav" type="audio/wav"></audio></td>
+                            <td><audio controls style="width:120px;height:32px;"><source src="./audio/happy_3.wav" type="audio/wav"></audio></td>
+                        </tr>
+                        <tr>
+                            <td class="text-content" style="font-weight: 600; color: #7b2cbf;">Sad but with a hint of Hope</td>
+                            <td class="text-content">虽然现在很难过，但我相信明天会更好的。</td>
+                            <td><audio controls style="width:120px;height:32px;"><source src="./audio/sad_2.wav" type="audio/wav"></audio></td>
+                            <td><audio controls style="width:120px;height:32px;"><source src="./audio/sad_1.wav" type="audio/wav"></audio></td>
+                            <td><audio controls style="width:120px;height:32px;"><source src="./audio/sad_3.wav" type="audio/wav"></audio></td>
+                        </tr>
+                        <tr>
+                            <td class="text-content" style="font-weight: 600; color: #7b2cbf;">Angry but Restrained</td>
+                            <td class="text-content">我很生气，但我会控制好自己的情绪，你给我记住。</td>
+                            <td><audio controls style="width:120px;height:32px;"><source src="./audio/Angry_2.wav" type="audio/wav"></audio></td>
+                            <td><audio controls style="width:120px;height:32px;"><source src="./audio/Argry_1.wav" type="audio/wav"></audio></td>
+                            <td><audio controls style="width:120px;height:32px;"><source src="./audio/Angry_3.wav" type="audio/wav"></audio></td>
+                        </tr>
+                        <tr>
+                            <td class="text-content" style="font-weight: 600; color: #7b2cbf;">Surprised and slightly Fearful</td>
+                            <td class="text-content">那个声音是什么？突然吓了我一跳！</td>
+                            <td><audio controls style="width:120px;height:32px;"><source src="./audio/Surprised_2.wav" type="audio/wav"></audio></td>
+                            <td><audio controls style="width:120px;height:32px;"><source src="./audio/Surprised_1.wav" type="audio/wav"></audio></td>
+                            <td><audio controls style="width:120px;height:32px;"><source src="./audio/Surprised_3.wav" type="audio/wav"></audio></td>
+                        </tr>
+                        <tr>
+                            <td class="text-content" style="font-weight: 600; color: #7b2cbf;">Disgusted with underlying Anger</td>
+                            <td class="text-content">这种行为真是太让人恶心了，我无法容忍！</td>
+                            <td><audio controls style="width:120px;height:32px;"><source src="./audio/Disgusted_2.wav" type="audio/wav"></audio></td>
+                            <td><audio controls style="width:120px;height:32px;"><source src="./audio/Disgusted_1.wav" type="audio/wav"></audio></td>
+                            <td><audio controls style="width:120px;height:32px;"><source src="./audio/Disgusted_3.wav" type="audio/wav"></audio></td>
+                        </tr>
+                        <tr>
+                            <td class="text-content" style="font-weight: 600; color: #7b2cbf;">Happy and Excited</td>
+                            <td class="text-content">天哪，我中奖了！太不可思议了，太开心了！</td>
+                            <td><audio controls style="width:120px;height:32px;"><source src="./audio/Happy2_2.wav" type="audio/wav"></audio></td>
+                            <td><audio controls style="width:120px;height:32px;"><source src="./audio/Happy2_1.wav" type="audio/wav"></audio></td>
+                            <td><audio controls style="width:120px;height:32px;"><source src="./audio/Happy2_3.wav" type="audio/wav"></audio></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Part 2: Single Emotion -->
+            <div class="demo-part">
+                <h3 class="single">😊 Part 2: Single Emotion Expression</h3>
+                <p style="color: #666; margin-bottom: 20px;">Standard emotional speech synthesis demonstrating fundamental expressiveness.</p>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Emotion</th>
+                            <th>Text Content</th>
+                            <th>Reference Audio</th>
+                            <th>Generated Audio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="emotion-badge" style="background:#ffeaa7;color:#d68910;">😊 Happy</span></td>
+                            <td class="text-content">太棒了！我终于完成了这个项目，感觉太开心了！</td>
+                            <td><span class="audio-placeholder">参考音频</span></td>
+                            <td><span class="audio-placeholder">生成音频</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="emotion-badge" style="background:#dfe6e9;color:#636e72;">😢 Sad</span></td>
+                            <td class="text-content">他离开了，再也不会回来了，我真的很难过。</td>
+                            <td><span class="audio-placeholder">参考音频</span></td>
+                            <td><span class="audio-placeholder">生成音频</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="emotion-badge" style="background:#fab1a0;color:#d63031;">😠 Angry</span></td>
+                            <td class="text-content">你怎么又迟到了？我说过多少次了！</td>
+                            <td><span class="audio-placeholder">参考音频</span></td>
+                            <td><span class="audio-placeholder">生成音频</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="emotion-badge" style="background:#a29bfe;color:#6c5ce7;">😨 Fearful</span></td>
+                            <td class="text-content">那边好像有什么东西在动，我们快离开这里吧。</td>
+                            <td><span class="audio-placeholder">参考音频</span></td>
+                            <td><span class="audio-placeholder">生成音频</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Part 3: Intensity Control -->
+            <div class="demo-part">
+                <h3 class="intensity">🎚️ Part 3: Emotion Intensity Control</h3>
+                <p style="color: #666; margin-bottom: 20px;">Fine-grained control over emotion intensity levels. Same text, different intensity.</p>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Emotion</th>
+                            <th>Text</th>
+                            <th>Low (30%)</th>
+                            <th>Medium (60%)</th>
+                            <th>High (100%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="emotion-badge" style="background:#ffeaa7;color:#d68910;">😊 Happy</span></td>
+                            <td class="text-content">这个消息真是太好了。</td>
+                            <td><span class="audio-placeholder">微笑</span></td>
+                            <td><span class="audio-placeholder">开心</span></td>
+                            <td><span class="audio-placeholder">狂喜</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="emotion-badge" style="background:#fab1a0;color:#d63031;">😠 Angry</span></td>
+                            <td class="text-content">你这样做是不对的。</td>
+                            <td><span class="audio-placeholder">不悦</span></td>
+                            <td><span class="audio-placeholder">生气</span></td>
+                            <td><span class="audio-placeholder">暴怒</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="emotion-badge" style="background:#dfe6e9;color:#636e72;">😢 Sad</span></td>
+                            <td class="text-content">这件事让我很难接受。</td>
+                            <td><span class="audio-placeholder">失落</span></td>
+                            <td><span class="audio-placeholder">难过</span></td>
+                            <td><span class="audio-placeholder">悲痛</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Visualization Results -->
+        <section class="section">
+            <h2><span>[V]</span> Visualization Results</h2>
+            <p style="color: #666; margin-bottom: 30px;">Attribute energy allocation analysis showing how AgentSteerTTS concentrates energy on target dimensions while reducing leakage.</p>
+            
+            <div class="figure-grid">
+                <div class="figure-showcase">
+                    <h4>"Angry but Restrained"</h4>
+                    <img src="./images/heatmap_aggregated_angry_restrained.png" alt="Angry+Restrained Heatmap">
+                    <div class="figure-caption">
+                        <strong>Figure 3a:</strong> AgentSteerTTS precisely controls the intensity balance between "Angry" and "Restrained", achieving nuanced expression that baseline models cannot replicate.
+                    </div>
+                </div>
+                <div class="figure-showcase">
+                    <h4>"Sad but Hopeful"</h4>
+                    <img src="./images/heatmap_aggregated_sad_hopeful.png" alt="Sad+Hopeful Heatmap">
+                    <div class="figure-caption">
+                        <strong>Figure 3b:</strong> For the challenging "Sad but Hopeful" combination, AgentSteerTTS successfully maintains both conflicting emotions.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p style="opacity: 0.9; font-size: 1.1em;">AgentSteerTTS - ICML 2026 Project Page</p>
+            <p style="margin-top: 10px; opacity: 0.7;">Paper, code, and audio demonstrations for AgentSteerTTS.</p>
+        </footer>
+    </div>
+</body>
+</html>
