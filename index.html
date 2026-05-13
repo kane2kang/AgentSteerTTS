@@ -61,6 +61,17 @@
             color: #1a1a2e; font-size: 1.8em; margin-bottom: 25px;
             display: flex; align-items: center; gap: 12px;
         }
+        .section h2 svg, .inline-icon {
+            width: 24px; height: 24px; flex: 0 0 auto;
+            color: #7b2cbf;
+        }
+        .figure-showcase h4 {
+            display: flex; align-items: center; gap: 8px;
+        }
+        .figure-showcase h4 .inline-icon {
+            width: 18px; height: 18px;
+            color: #e94560;
+        }
         
         /* Abstract */
         .abstract-box {
@@ -171,7 +182,15 @@
 
         <!-- Abstract -->
         <section class="section">
-            <h2><span>[A]</span> Abstract</h2>
+            <h2>
+                <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 19.5V5a2 2 0 0 1 2-2h10.5L20 6.5V19a2 2 0 0 1-2 2H6a2 2 0 0 1-2-1.5Z"/>
+                    <path d="M16 3v5h5"/>
+                    <path d="M8 12h8"/>
+                    <path d="M8 16h6"/>
+                </svg>
+                Abstract
+            </h2>
             <div class="abstract-box">
                 <p>
                     While current TTS models can be highly expressive, precise control over <strong>fine-grained composite instructions</strong> remains difficult due to the structural mismatch between discrete textual intents and continuous acoustic realizations. Inspired by human cognitive decoupling, we propose <strong style="color: #7b2cbf;">AgentSteerTTS</strong>, a multi-agent, closed-loop framework for intent-faithful emotional steering.
@@ -184,7 +203,17 @@
 
         <!-- Method Overview -->
         <section class="section">
-            <h2><span>[M]</span> Method Overview</h2>
+            <h2>
+                <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="6" cy="6" r="3"/>
+                    <circle cx="18" cy="6" r="3"/>
+                    <circle cx="12" cy="18" r="3"/>
+                    <path d="M8.5 7.5 11 15"/>
+                    <path d="M15.5 7.5 13 15"/>
+                    <path d="M9 6h6"/>
+                </svg>
+                Method Overview
+            </h2>
             <div class="figure-showcase">
                 <img src="./images/overview.png" alt="Framework Overview" style="width: 100%;">
                 <div class="figure-caption">
@@ -199,11 +228,28 @@
 
         <!-- Research Motivation -->
         <section class="section">
-            <h2><span>[R]</span> Research Motivation</h2>
+            <h2>
+                <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 3v18h18"/>
+                    <path d="m7 15 4-4 3 3 5-7"/>
+                    <path d="M17 7h2v2"/>
+                </svg>
+                Research Motivation
+            </h2>
             <p style="color: #666; margin-bottom: 20px;">Our pilot study reveals that existing TTS models exhibit <strong>systematic biases</strong> when handling composite emotional instructions, failing to faithfully express multi-dimensional emotional intents.</p>
             
             <div class="figure-showcase">
-                <h4>Composite Emotion Control Analysis</h4>
+                <h4>
+                    <svg class="inline-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="8"/>
+                        <circle cx="12" cy="12" r="3"/>
+                        <path d="M12 2v4"/>
+                        <path d="M12 18v4"/>
+                        <path d="M2 12h4"/>
+                        <path d="M18 12h4"/>
+                    </svg>
+                    Composite Emotion Control Analysis
+                </h4>
                 <img src="./images/composite_emotion_radar.png" alt="Composite Emotion Radar" style="width: 100%; max-width: 900px; display: block; margin: 0 auto;">
                 <div class="figure-caption">
                     <strong>Figure 2: Semantic-Acoustic Misalignment in Existing Methods.</strong> 
@@ -219,7 +265,14 @@
 
         <!-- Audio Demonstrations -->
         <section class="section">
-            <h2><span>🎧</span> Audio Demonstrations</h2>
+            <h2>
+                <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 14v-4a9 9 0 0 1 18 0v4"/>
+                    <path d="M5 14h3v7H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2Z"/>
+                    <path d="M19 14h-3v7h3a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2Z"/>
+                </svg>
+                Audio Demonstrations
+            </h2>
             <p style="color: #666; margin-bottom: 30px;">We present audio samples demonstrating AgentSteerTTS's capabilities across three key dimensions.</p>
 
             <!-- Part 1: Composite Instructions -->
@@ -379,19 +432,44 @@
 
         <!-- Visualization Results -->
         <section class="section">
-            <h2><span>[V]</span> Visualization Results</h2>
+            <h2>
+                <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="7" height="7" rx="1"/>
+                    <rect x="14" y="3" width="7" height="7" rx="1"/>
+                    <rect x="3" y="14" width="7" height="7" rx="1"/>
+                    <rect x="14" y="14" width="7" height="7" rx="1"/>
+                </svg>
+                Visualization Results
+            </h2>
             <p style="color: #666; margin-bottom: 30px;">Attribute energy allocation analysis showing how AgentSteerTTS concentrates energy on target dimensions while reducing leakage.</p>
             
             <div class="figure-grid">
                 <div class="figure-showcase">
-                    <h4>"Angry but Restrained"</h4>
+                    <h4>
+                        <svg class="inline-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 14a8 8 0 0 1 16 0"/>
+                            <path d="M8 14v4"/>
+                            <path d="M16 14v4"/>
+                            <path d="M10 9h.01"/>
+                            <path d="M14 9h.01"/>
+                        </svg>
+                        "Angry but Restrained"
+                    </h4>
                     <img src="./images/heatmap_aggregated_angry_restrained.png" alt="Angry+Restrained Heatmap">
                     <div class="figure-caption">
                         <strong>Figure 3a:</strong> AgentSteerTTS precisely controls the intensity balance between "Angry" and "Restrained", achieving nuanced expression that baseline models cannot replicate.
                     </div>
                 </div>
                 <div class="figure-showcase">
-                    <h4>"Sad but Hopeful"</h4>
+                    <h4>
+                        <svg class="inline-icon" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 21s-7-4.35-7-11a7 7 0 0 1 14 0c0 6.65-7 11-7 11Z"/>
+                            <path d="M9 10h.01"/>
+                            <path d="M15 10h.01"/>
+                            <path d="M9 15c1.5-1 4.5-1 6 0"/>
+                        </svg>
+                        "Sad but Hopeful"
+                    </h4>
                     <img src="./images/heatmap_aggregated_sad_hopeful.png" alt="Sad+Hopeful Heatmap">
                     <div class="figure-caption">
                         <strong>Figure 3b:</strong> For the challenging "Sad but Hopeful" combination, AgentSteerTTS successfully maintains both conflicting emotions.
