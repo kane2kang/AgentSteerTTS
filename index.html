@@ -44,11 +44,12 @@
         }
         .resource-link {
             display: inline-flex; align-items: center; justify-content: center;
-            min-width: 132px; padding: 10px 18px; border-radius: 8px;
+            gap: 8px; min-width: 132px; padding: 10px 18px; border-radius: 8px;
             background: rgba(255,255,255,0.12); color: #fff; text-decoration: none;
             border: 1px solid rgba(255,255,255,0.24); font-weight: 600;
             transition: background 0.2s ease, transform 0.2s ease;
         }
+        .resource-link svg { width: 18px; height: 18px; flex: 0 0 auto; }
         .resource-link:hover { background: rgba(255,255,255,0.2); transform: translateY(-1px); }
         
         /* Section */
@@ -149,8 +150,22 @@
             </div>
             <div class="status-badge">ICML 2026 Project Page</div>
             <div class="resource-links" aria-label="Project resources">
-                <a class="resource-link" href="https://github.com/kane2kang/AgentSteerTTS" target="_blank" rel="noopener">GitHub</a>
-                <a class="resource-link" href="#" target="_blank" rel="noopener">Paper</a>
+                <a class="resource-link" href="https://github.com/kane2kang/AgentSteerTTS" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.52 2.87 8.35 6.84 9.7.5.09.68-.22.68-.49 0-.24-.01-1.04-.01-1.89-2.78.62-3.37-1.21-3.37-1.21-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.63.07-.63 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.71 0 0 .84-.28 2.75 1.05A9.32 9.32 0 0 1 12 6.99c.85 0 1.7.12 2.5.34 1.91-1.33 2.75-1.05 2.75-1.05.55 1.4.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.79-4.57 5.05.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.59.69.49A10.12 10.12 0 0 0 22 12.26C22 6.58 17.52 2 12 2Z"/>
+                    </svg>
+                    GitHub
+                </a>
+                <a class="resource-link" href="#" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/>
+                        <path d="M14 2v6h6"/>
+                        <path d="M8 13h8"/>
+                        <path d="M8 17h6"/>
+                        <path d="M8 9h2"/>
+                    </svg>
+                    Paper
+                </a>
             </div>
         </header>
 
