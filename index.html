@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AgentSteerTTS Demo - Anonymous Submission</title>
+    <title>AgentSteerTTS Demo</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -23,12 +23,33 @@
         }
         header .subtitle { font-size: 1.2em; color: #a0a0a0; margin-bottom: 10px; }
         header .full-title { font-size: 1em; color: #888; max-width: 900px; margin: 0 auto 20px; }
-        .anonymous-badge {
-            display: inline-block; padding: 12px 30px;
+        .author-list {
+            max-width: 980px; margin: 24px auto 12px; color: #f5f7fb;
+            font-size: 1.02em; line-height: 1.7;
+        }
+        .author-list sup { color: #8fdcff; font-size: 0.72em; margin-left: 2px; }
+        .affiliations {
+            max-width: 980px; margin: 10px auto 0; color: #b7c0d8;
+            font-size: 0.9em; line-height: 1.65;
+        }
+        .status-badge {
+            display: inline-block; padding: 10px 24px;
             background: rgba(255,255,255,0.1); color: white;
-            border-radius: 25px; border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 25px; border: 1px solid rgba(255,255,255,0.28);
             font-weight: 600; margin-top: 20px;
         }
+        .resource-links {
+            display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .resource-link {
+            display: inline-flex; align-items: center; justify-content: center;
+            min-width: 132px; padding: 10px 18px; border-radius: 8px;
+            background: rgba(255,255,255,0.12); color: #fff; text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.24); font-weight: 600;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+        .resource-link:hover { background: rgba(255,255,255,0.2); transform: translateY(-1px); }
         
         /* Section */
         .section {
@@ -114,13 +135,28 @@
             <h1>AgentSteerTTS</h1>
             <p class="subtitle">Multi-Agent Closed-Loop Steering Framework</p>
             <p class="full-title">A Multi-Agent Closed-Loop Steering Framework for Intent-Consistent Expressive Text-to-Speech</p>
-            <div class="anonymous-badge">🔒 Anonymous Submission</div>
-            <p style="color: #888; font-size: 0.9em; margin-top: 15px;">Paper, code, and audio samples will be released upon acceptance.</p>
+            <div class="author-list">
+                Bin Kang<sup>1,2,3</sup>, Shaoguo Wen<sup>3</sup>, Yang Fan<sup>2</sup>,
+                Shunlong Wu<sup>4</sup>, Junjie Wang<sup>2</sup>, Yulin Li<sup>2</sup>,
+                Junzhi Zhao<sup>5</sup>, Junle Wang<sup>3</sup>, Zhuotao Tian<sup>2</sup>
+            </div>
+            <div class="affiliations">
+                <sup>1</sup>University of Chinese Academy of Sciences, Beijing, China<br>
+                <sup>2</sup>Shenzhen Loop Area Institute, Shenzhen, China<br>
+                <sup>3</sup>Tencent Turinglab, Shenzhen, China<br>
+                <sup>4</sup>Tsinghua University, Beijing, China<br>
+                <sup>5</sup>Southwest Jiaotong University, Chengdu, China
+            </div>
+            <div class="status-badge">ICML 2026 Project Page</div>
+            <div class="resource-links" aria-label="Project resources">
+                <a class="resource-link" href="https://github.com/kane2kang/AgentSteerTTS" target="_blank" rel="noopener">GitHub</a>
+                <a class="resource-link" href="#" target="_blank" rel="noopener">Paper</a>
+            </div>
         </header>
 
         <!-- Abstract -->
         <section class="section">
-            <h2><span>📋</span> Abstract</h2>
+            <h2><span>[A]</span> Abstract</h2>
             <div class="abstract-box">
                 <p>
                     While current TTS models can be highly expressive, precise control over <strong>fine-grained composite instructions</strong> remains difficult due to the structural mismatch between discrete textual intents and continuous acoustic realizations. Inspired by human cognitive decoupling, we propose <strong style="color: #7b2cbf;">AgentSteerTTS</strong>, a multi-agent, closed-loop framework for intent-faithful emotional steering.
@@ -133,7 +169,7 @@
 
         <!-- Method Overview -->
         <section class="section">
-            <h2><span>🏛️</span> Method Overview</h2>
+            <h2><span>[M]</span> Method Overview</h2>
             <div class="figure-showcase">
                 <img src="./images/overview.png" alt="Framework Overview" style="width: 100%;">
                 <div class="figure-caption">
@@ -148,11 +184,11 @@
 
         <!-- Research Motivation -->
         <section class="section">
-            <h2><span>📊</span> Research Motivation</h2>
+            <h2><span>[R]</span> Research Motivation</h2>
             <p style="color: #666; margin-bottom: 20px;">Our pilot study reveals that existing TTS models exhibit <strong>systematic biases</strong> when handling composite emotional instructions, failing to faithfully express multi-dimensional emotional intents.</p>
             
             <div class="figure-showcase">
-                <h4>🎯 Composite Emotion Control Analysis</h4>
+                <h4>Composite Emotion Control Analysis</h4>
                 <img src="./images/composite_emotion_radar.png" alt="Composite Emotion Radar" style="width: 100%; max-width: 900px; display: block; margin: 0 auto;">
                 <div class="figure-caption">
                     <strong>Figure 2: Semantic-Acoustic Misalignment in Existing Methods.</strong> 
@@ -328,19 +364,19 @@
 
         <!-- Visualization Results -->
         <section class="section">
-            <h2><span>🔥</span> Visualization Results</h2>
+            <h2><span>[V]</span> Visualization Results</h2>
             <p style="color: #666; margin-bottom: 30px;">Attribute energy allocation analysis showing how AgentSteerTTS concentrates energy on target dimensions while reducing leakage.</p>
             
             <div class="figure-grid">
                 <div class="figure-showcase">
-                    <h4>🎯 "Angry but Restrained"</h4>
+                    <h4>"Angry but Restrained"</h4>
                     <img src="./images/heatmap_aggregated_angry_restrained.png" alt="Angry+Restrained Heatmap">
                     <div class="figure-caption">
                         <strong>Figure 3a:</strong> AgentSteerTTS precisely controls the intensity balance between "Angry" and "Restrained", achieving nuanced expression that baseline models cannot replicate.
                     </div>
                 </div>
                 <div class="figure-showcase">
-                    <h4>🎯 "Sad but Hopeful"</h4>
+                    <h4>"Sad but Hopeful"</h4>
                     <img src="./images/heatmap_aggregated_sad_hopeful.png" alt="Sad+Hopeful Heatmap">
                     <div class="figure-caption">
                         <strong>Figure 3b:</strong> For the challenging "Sad but Hopeful" combination, AgentSteerTTS successfully maintains both conflicting emotions.
@@ -351,8 +387,8 @@
 
         <!-- Footer -->
         <footer>
-            <p style="opacity: 0.9; font-size: 1.1em;">🔒 Anonymous Submission for ICML 2026</p>
-            <p style="margin-top: 10px; opacity: 0.7;">Paper, code, and audio samples will be released upon acceptance.</p>
+            <p style="opacity: 0.9; font-size: 1.1em;">AgentSteerTTS - ICML 2026 Project Page</p>
+            <p style="margin-top: 10px; opacity: 0.7;">Paper, code, and audio demonstrations for AgentSteerTTS.</p>
         </footer>
     </div>
 </body>
