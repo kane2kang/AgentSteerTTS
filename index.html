@@ -51,6 +51,16 @@
         }
         .resource-link svg { width: 18px; height: 18px; flex: 0 0 auto; }
         .resource-link:hover { background: rgba(255,255,255,0.2); transform: translateY(-1px); }
+        .quick-nav {
+            display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;
+            margin: 24px auto 0; max-width: 980px;
+        }
+        .quick-nav a {
+            color: #dce8ff; text-decoration: none; font-weight: 600;
+            padding: 8px 14px; border-radius: 8px;
+            background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16);
+        }
+        .quick-nav a:hover { background: rgba(255,255,255,0.16); }
         
         /* Section */
         .section {
@@ -121,6 +131,60 @@
             display: inline-flex; align-items: center; gap: 8px; font-size: 0.85em;
         }
         .audio-placeholder::before { content: '🔊'; }
+        audio { width: 100%; max-width: 210px; height: 34px; }
+        .audio-panel {
+            background: #fff; border: 1px solid #e8ecf5; border-radius: 12px;
+            padding: 22px; box-shadow: 0 8px 24px rgba(20, 28, 58, 0.08);
+        }
+        .audio-panel h4 {
+            color: #1a1a2e; font-size: 1.05em; margin-bottom: 10px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .audio-panel p { color: #5d6678; font-size: 0.94em; margin-bottom: 14px; }
+        .demo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 18px; }
+        .single-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; margin-top: 20px; }
+        .sample-card {
+            background: #fff; border: 1px solid #e8ecf5; border-radius: 12px;
+            padding: 18px; box-shadow: 0 8px 24px rgba(20, 28, 58, 0.08);
+        }
+        .sample-card.featured {
+            border-color: rgba(123,44,191,0.28);
+            background: linear-gradient(180deg, #ffffff 0%, #fbf8ff 100%);
+        }
+        .sample-head {
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 12px; margin-bottom: 10px;
+        }
+        .sample-title { color: #1a1a2e; font-weight: 700; font-size: 1.05em; }
+        .sample-meta {
+            color: #6b7280; font-size: 0.86em; line-height: 1.55;
+            margin: 10px 0 14px; min-height: 42px;
+        }
+        .method-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        .method-item {
+            background: #f7f8fc; border: 1px solid #e6e9f2; border-radius: 10px;
+            padding: 12px;
+        }
+        .method-item.ours {
+            background: linear-gradient(180deg, #f9f3ff 0%, #eefbff 100%);
+            border-color: rgba(123,44,191,0.32);
+        }
+        .method-label {
+            display: block; color: #31384a; font-weight: 700;
+            font-size: 0.82em; margin-bottom: 8px;
+        }
+        .reference-strip {
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 18px; padding: 18px 20px; border-radius: 12px;
+            background: linear-gradient(135deg, #f6f9ff 0%, #f1efff 100%);
+            border: 1px solid #e1e6f5; margin: 22px 0;
+        }
+        .reference-strip strong { color: #1a1a2e; }
+        .reference-strip span { color: #626b7d; font-size: 0.92em; }
+        .section-note {
+            color: #626b7d; background: #f8f9fc; border-left: 4px solid #00d4ff;
+            padding: 12px 14px; border-radius: 8px; margin: 14px 0 20px;
+        }
         
         /* Demo parts */
         .demo-part { margin-bottom: 50px; }
@@ -136,6 +200,8 @@
         @media (max-width: 768px) {
             header h1 { font-size: 2.2em; }
             .figure-grid { grid-template-columns: 1fr; }
+            .demo-grid, .single-grid, .method-grid { grid-template-columns: 1fr; }
+            .reference-strip { flex-direction: column; align-items: flex-start; }
             .comparison-table { font-size: 0.85em; }
         }
     </style>
@@ -179,6 +245,12 @@
                     Paper
                 </a>
             </div>
+            <nav class="quick-nav" aria-label="Page sections">
+                <a href="#overview">Overview</a>
+                <a href="#audio-demos">Audio Demos</a>
+                <a href="#single-emotion-set">Single Emotions</a>
+                <a href="#visualization">Visualization</a>
+            </nav>
         </header>
 
         <!-- Abstract -->
@@ -203,7 +275,7 @@
         </section>
 
         <!-- Method Overview -->
-        <section class="section">
+        <section class="section" id="overview">
             <h2>
                 <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="6" cy="6" r="3"/>
@@ -265,7 +337,7 @@
         </section>
 
         <!-- Audio Demonstrations -->
-        <section class="section">
+        <section class="section" id="audio-demos">
             <h2>
                 <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M3 14v-4a9 9 0 0 1 18 0v4"/>
@@ -274,11 +346,29 @@
                 </svg>
                 Audio Demonstrations
             </h2>
-            <p style="color: #666; margin-bottom: 30px;">We present audio samples demonstrating AgentSteerTTS's capabilities across three key dimensions.</p>
+            <p style="color: #666; margin-bottom: 24px;">We present side-by-side audio samples that make the comparison immediate: same content and speaker condition, different emotional controllability.</p>
+
+            <div class="demo-grid">
+                <div class="audio-panel">
+                    <h4>1. Composite control</h4>
+                    <p>Fine-grained mixed instructions test whether a model can preserve both dominant and secondary emotional cues.</p>
+                    <span class="emotion-badge badge-primary">Core task</span>
+                </div>
+                <div class="audio-panel">
+                    <h4>2. Single emotions</h4>
+                    <p>The new ICML asset bundle compares neutral and five basic emotions across IndexTTS2, CosyVoice2, and ours.</p>
+                    <span class="emotion-badge badge-secondary">New samples</span>
+                </div>
+                <div class="audio-panel">
+                    <h4>3. Intensity steering</h4>
+                    <p>Low, medium, and high intensity samples demonstrate controllable acoustic strength under fixed semantics.</p>
+                    <span class="emotion-badge" style="background:#ffe3ec;color:#c9184a;">Calibration</span>
+                </div>
+            </div>
 
             <!-- Part 1: Composite Instructions -->
             <div class="demo-part">
-                <h3 class="composite">🎭 Part 1: Composite Emotion Control</h3>
+                <h3 class="composite">Part 1: Composite Emotion Control</h3>
                 <p style="color: #666; margin-bottom: 20px;">Complex instructions combining multiple emotional attributes - our <strong>core contribution</strong>.</p>
                 
                 <table class="comparison-table">
@@ -296,9 +386,8 @@
                         <tr>
                             <td rowspan="6" style="vertical-align: middle; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
                                 <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
-                                    <span style="font-size: 2em;">🎤</span>
                                     <span style="font-weight: 600; color: #7b2cbf;">Speaker Reference</span>
-                                    <audio controls style="width:140px;height:36px;"><source src="./audio/spk1.m4a" type="audio/mp4">不支持</audio>
+                                    <audio controls><source src="./audio/spk1.m4a" type="audio/mp4">Your browser does not support audio.</audio>
                                 </div>
                             </td>
                             <td class="text-content" style="font-weight: 600; color: #7b2cbf;">Happy but slightly Arrogant</td>
@@ -347,46 +436,98 @@
             </div>
 
             <!-- Part 2: Single Emotion -->
-            <div class="demo-part">
-                <h3 class="single">😊 Part 2: Single Emotion Expression</h3>
-                <p style="color: #666; margin-bottom: 20px;">Standard emotional speech synthesis demonstrating fundamental expressiveness.</p>
-                
-                <table class="comparison-table">
-                    <thead>
-                        <tr>
-                            <th>Emotion</th>
-                            <th>Text Content</th>
-                            <th>Reference Audio</th>
-                            <th>Generated Audio</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><span class="emotion-badge" style="background:#ffeaa7;color:#d68910;">😊 Happy</span></td>
-                            <td class="text-content">太棒了！我终于完成了这个项目，感觉太开心了！</td>
-                            <td><span class="audio-placeholder">参考音频</span></td>
-                            <td><span class="audio-placeholder">生成音频</span></td>
-                        </tr>
-                        <tr>
-                            <td><span class="emotion-badge" style="background:#dfe6e9;color:#636e72;">😢 Sad</span></td>
-                            <td class="text-content">他离开了，再也不会回来了，我真的很难过。</td>
-                            <td><span class="audio-placeholder">参考音频</span></td>
-                            <td><span class="audio-placeholder">生成音频</span></td>
-                        </tr>
-                        <tr>
-                            <td><span class="emotion-badge" style="background:#fab1a0;color:#d63031;">😠 Angry</span></td>
-                            <td class="text-content">你怎么又迟到了？我说过多少次了！</td>
-                            <td><span class="audio-placeholder">参考音频</span></td>
-                            <td><span class="audio-placeholder">生成音频</span></td>
-                        </tr>
-                        <tr>
-                            <td><span class="emotion-badge" style="background:#a29bfe;color:#6c5ce7;">😨 Fearful</span></td>
-                            <td class="text-content">那边好像有什么东西在动，我们快离开这里吧。</td>
-                            <td><span class="audio-placeholder">参考音频</span></td>
-                            <td><span class="audio-placeholder">生成音频</span></td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="demo-part" id="single-emotion-set">
+                <h3 class="single">Part 2: Single Emotion Benchmark Set</h3>
+                <p style="color: #666; margin-bottom: 12px;">The newly added ICML asset bundle provides six single-emotion conditions with direct comparisons against IndexTTS2 and CosyVoice2.</p>
+                <div class="section-note">Each row uses the same transcribed text prompt across IndexTTS2, CosyVoice2, and AgentSteerTTS, making the emotional delivery differences easier to compare.</div>
+
+                <div class="reference-strip">
+                    <div>
+                        <strong>Shared speaker reference</strong><br>
+                        <span>科技的发展日新月异，人工智能正在改变我们的生活方式。从智能手机到自动驾驶，每一项创新都让世界变得更加便捷和高效。</span>
+                    </div>
+                    <audio controls><source src="./audio/ICML%20(1)/reference1.wav" type="audio/wav">Your browser does not support audio.</audio>
+                </div>
+
+                <div class="single-grid">
+                    <article class="sample-card featured">
+                        <div class="sample-head">
+                            <span class="sample-title">Happy</span>
+                            <span class="emotion-badge" style="background:#fff2bf;color:#9a6500;">Positive</span>
+                        </div>
+                        <div class="sample-meta">太棒了，我终于收到了期待已久的录取通知书，这真是我人生中最开心的一天。</div>
+                        <div class="method-grid">
+                            <div class="method-item"><span class="method-label">IndexTTS2</span><audio controls><source src="./audio/ICML%20(1)/Happy/indextts2.wav" type="audio/wav"></audio></div>
+                            <div class="method-item"><span class="method-label">CosyVoice2</span><audio controls><source src="./audio/ICML%20(1)/Happy/cosyvoice2.wav" type="audio/wav"></audio></div>
+                            <div class="method-item ours"><span class="method-label">AgentSteerTTS</span><audio controls><source src="./audio/ICML%20(1)/Happy/ours.wav" type="audio/wav"></audio></div>
+                        </div>
+                    </article>
+
+                    <article class="sample-card">
+                        <div class="sample-head">
+                            <span class="sample-title">Sad</span>
+                            <span class="emotion-badge" style="background:#e9edf3;color:#536071;">Negative</span>
+                        </div>
+                        <div class="sample-meta">她默默地站在窗前，看着窗外的细雨，回想起那些再也回不去的美好时光，眼眶不禁湿润了。</div>
+                        <div class="method-grid">
+                            <div class="method-item"><span class="method-label">IndexTTS2</span><audio controls><source src="./audio/ICML%20(1)/Sad/indextts2.wav" type="audio/wav"></audio></div>
+                            <div class="method-item"><span class="method-label">CosyVoice2</span><audio controls><source src="./audio/ICML%20(1)/Sad/cosyvoice2.wav" type="audio/wav"></audio></div>
+                            <div class="method-item ours"><span class="method-label">AgentSteerTTS</span><audio controls><source src="./audio/ICML%20(1)/Sad/ours.wav" type="audio/wav"></audio></div>
+                        </div>
+                    </article>
+
+                    <article class="sample-card">
+                        <div class="sample-head">
+                            <span class="sample-title">Angry</span>
+                            <span class="emotion-badge" style="background:#ffe0df;color:#bd1f2d;">High arousal</span>
+                        </div>
+                        <div class="sample-meta">你怎么能这样做？我已经反复强调过很多次了，你根本就没有把我的话当回事。</div>
+                        <div class="method-grid">
+                            <div class="method-item"><span class="method-label">IndexTTS2</span><audio controls><source src="./audio/ICML%20(1)/Angry/indextts2.wav" type="audio/wav"></audio></div>
+                            <div class="method-item"><span class="method-label">CosyVoice2</span><audio controls><source src="./audio/ICML%20(1)/Angry/cosyvoice2.wav" type="audio/wav"></audio></div>
+                            <div class="method-item ours"><span class="method-label">AgentSteerTTS</span><audio controls><source src="./audio/ICML%20(1)/Angry/ours.wav" type="audio/wav"></audio></div>
+                        </div>
+                    </article>
+
+                    <article class="sample-card">
+                        <div class="sample-head">
+                            <span class="sample-title">Fearful</span>
+                            <span class="emotion-badge" style="background:#ebe7ff;color:#5b4bb7;">Tense</span>
+                        </div>
+                        <div class="sample-meta">不要过来，求求你不要过来，我听到门外有奇怪的脚步声，越来越近了。</div>
+                        <div class="method-grid">
+                            <div class="method-item"><span class="method-label">IndexTTS2</span><audio controls><source src="./audio/ICML%20(1)/Fearful/indextts2.wav" type="audio/wav"></audio></div>
+                            <div class="method-item"><span class="method-label">CosyVoice2</span><audio controls><source src="./audio/ICML%20(1)/Fearful/cosyvoice2.wav" type="audio/wav"></audio></div>
+                            <div class="method-item ours"><span class="method-label">AgentSteerTTS</span><audio controls><source src="./audio/ICML%20(1)/Fearful/ours.wav" type="audio/wav"></audio></div>
+                        </div>
+                    </article>
+
+                    <article class="sample-card">
+                        <div class="sample-head">
+                            <span class="sample-title">Surprised</span>
+                            <span class="emotion-badge" style="background:#ddf7ff;color:#087f9b;">Reactive</span>
+                        </div>
+                        <div class="sample-meta">什么？你说的是真的吗？我简直不敢相信自己的耳朵，这也太意外了吧。</div>
+                        <div class="method-grid">
+                            <div class="method-item"><span class="method-label">IndexTTS2</span><audio controls><source src="./audio/ICML%20(1)/Surprised/indextts2.wav" type="audio/wav"></audio></div>
+                            <div class="method-item"><span class="method-label">CosyVoice2</span><audio controls><source src="./audio/ICML%20(1)/Surprised/cosyvoice2.wav" type="audio/wav"></audio></div>
+                            <div class="method-item ours"><span class="method-label">AgentSteerTTS</span><audio controls><source src="./audio/ICML%20(1)/Surprised/ours.wav" type="audio/wav"></audio></div>
+                        </div>
+                    </article>
+
+                    <article class="sample-card">
+                        <div class="sample-head">
+                            <span class="sample-title">Neutral</span>
+                            <span class="emotion-badge" style="background:#edf2f7;color:#495464;">Baseline</span>
+                        </div>
+                        <div class="sample-meta">今天的天气预报显示，明天白天多云转晴，气温在15-25度之间，适合户外活动。</div>
+                        <div class="method-grid">
+                            <div class="method-item"><span class="method-label">IndexTTS2</span><audio controls><source src="./audio/ICML%20(1)/Neutral/indextts2.wav" type="audio/wav"></audio></div>
+                            <div class="method-item"><span class="method-label">CosyVoice2</span><audio controls><source src="./audio/ICML%20(1)/Neutral/cosyvoice2.wav" type="audio/wav"></audio></div>
+                            <div class="method-item ours"><span class="method-label">AgentSteerTTS</span><audio controls><source src="./audio/ICML%20(1)/Neutral/ours.wav" type="audio/wav"></audio></div>
+                        </div>
+                    </article>
+                </div>
             </div>
 
             <!-- Part 3: Intensity Control -->
@@ -432,7 +573,7 @@
         </section>
 
         <!-- Visualization Results -->
-        <section class="section">
+        <section class="section" id="visualization">
             <h2>
                 <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <rect x="3" y="3" width="7" height="7" rx="1"/>
