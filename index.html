@@ -269,7 +269,7 @@
                     While current TTS models can be highly expressive, precise control over <strong>fine-grained composite instructions</strong> remains difficult due to the structural mismatch between discrete textual intents and continuous acoustic realizations. Inspired by human cognitive decoupling, we propose <strong style="color: #7b2cbf;">AgentSteerTTS</strong>, a multi-agent, closed-loop framework for intent-faithful emotional steering.
                 </p>
                 <p>
-                    We first apply <strong>adversarial gradient reversal</strong> to disentangle identity and emotion and enforce strict latent orthogonality. Subsequently, we introduce a <strong>Dual-Stream Anchoring Controller</strong>, where a <em>Retrieval Agent</em> leverages a large-scale constructed library of fine-grained acoustic prototypes to ground abstract intent, while a <em>Synthesis Agent</em> transforms these cues into continuous control vectors through gated fusion. Finally, we implement a <strong>fast-slow feedback mechanism</strong> where a <em>Fast Control Agent</em> performs rapid latent gradient correction for intensity calibration, and a <em>Supervisor Agent</em> provides high-level perceptual critique to rectify semantic-acoustic discrepancies.
+                    We first introduce an <strong>adversarial disentanglement agent</strong> to mitigate speaker-emotion leakage by learning separable identity and emotion-prosody subspaces with leakage-suppressing regularization. Subsequently, we introduce a <strong>Dual-Stream Anchoring Controller</strong>, where a <em>Retrieval Agent</em> leverages a large-scale constructed library of fine-grained acoustic prototypes to ground abstract intent, while a <em>Synthesis Agent</em> transforms these cues into continuous control vectors through gated fusion. Finally, we implement a <strong>fast-slow feedback mechanism</strong> where a <em>Fast Control Agent</em> performs rapid latent gradient correction for intensity calibration, and a <em>Supervisor Agent</em> provides high-level perceptual critique to rectify semantic-acoustic discrepancies.
                 </p>
             </div>
         </section>
@@ -291,7 +291,7 @@
                 <img src="./images/overview.png" alt="Framework Overview" style="width: 100%;">
                 <div class="figure-caption">
                     <strong>Figure 1: AgentSteerTTS Framework.</strong> Our method consists of four key components: 
-                    (1) <strong>Adversarial Disentanglement Module (ADM)</strong> that decouples speaker identity from emotion via gradient reversal and latent orthogonality; 
+                    (1) <strong>Adversarial Disentanglement Module (ADM)</strong> that reduces speaker-emotion leakage by factorizing identity and emotion-prosody representations; 
                     (2) <strong>Retrieval Agent</strong> that retrieves high-expressivity prototypes from a large-scale acoustic library with perceptual pruning; 
                     (3) <strong>Synthesis Agent</strong> that transforms discrete intents into continuous control vectors via gated fusion mechanism; 
                     (4) <strong>Fast-Slow Feedback</strong> mechanism for hierarchical semantic-acoustic alignment correction.
