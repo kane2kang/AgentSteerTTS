@@ -8,9 +8,7 @@
 [![Project Page](https://img.shields.io/badge/Project-Page-blue)](https://kane2kang.github.io/AgentSteerTTS/)
 [![Conference](https://img.shields.io/badge/ICML-2026-purple)](https://icml.cc/virtual/2026)
 
-**Bin Kang<sup>1,2,3</sup>, Shaoguo Wen<sup>3</sup>, Yang Fan<sup>2</sup>, Shunlong Wu<sup>4</sup>, Junjie Wang<sup>2</sup>, Yulin Li<sup>2</sup>, Junzhi Zhao<sup>5</sup>, Junle Wang<sup>3</sup>, Zhuotao Tian<sup>2,*</sup>**
 
-<sup>1</sup>University of Chinese Academy of Sciences &nbsp; <sup>2</sup>Shenzhen Loop Area Institute &nbsp; <sup>3</sup>Tencent Turinglab &nbsp; <sup>4</sup>Tsinghua University &nbsp; <sup>5</sup>Southwest Jiaotong University
 
 </div>
 
